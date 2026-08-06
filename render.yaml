@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: govindraj-watch-shop
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+    disk:
+      name: govindraj-db-data
+      mountPath: /data
+      sizeGB: 1

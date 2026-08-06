@@ -1,0 +1,42 @@
+# ==============================================================================
+# Robots.txt for Govindraj Watch & Gift Center
+# Website: https://www.govindrajwatch.shop
+# Location: Naigaon Bazar, Nanded, Maharashtra, India
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /assets/css/
+Allow: /assets/js/
+Allow: /assets/images/
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+Disallow: /scratch/
+
+# Search Engine Bot Rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+
+User-agent: Applebot
+Allow: /
+Disallow: /admin.html
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin.html
+
+User-agent: YandexBot
+Allow: /
+Disallow: /admin.html
+
+# Sitemap Location
+Sitemap: https://www.govindrajwatch.shop/sitemap.xml

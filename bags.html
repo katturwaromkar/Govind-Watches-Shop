@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="luxury-gold" data-mode="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bags Collection - School, College, Laptop & Tour Bags | Govindraj Watch & Accessories Shop</title>
+  <meta name="description" content="Explore School Bags, College Backpacks, Laptop Briefcases, and Tour & Travel Bags at Govindraj Watch & Accessories Shop in Naigaon Bazar.">
+  <meta name="keywords" content="School Bags Naigaon, College Backpacks Nanded, Laptop Bags Naigaon, Travel Luggage Naigaon Bazar">
+  
+  <!-- Favicon Icons -->
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  
+  <!-- Razorpay Payment Gateway SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  
+  <!-- Canonical & Sitemap -->
+  <link rel="canonical" href="https://www.govindrajwatch.shop/bags.html">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.govindrajwatch.shop/bags.html">
+  <meta property="og:site_name" content="Govindraj Watch & Gift Center">
+  <meta property="og:title" content="Bags Collection - School, College, Laptop & Tour Bags">
+  <meta property="og:description" content="Explore School Bags, College Backpacks, Laptop Briefcases, and Tour & Travel Bags at Govindraj Watch & Accessories Shop in Naigaon Bazar.">
+  <meta property="og:image" content="https://www.govindrajwatch.shop/assets/images/hero-watch.webp">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://www.govindrajwatch.shop/bags.html">
+  <meta name="twitter:title" content="Bags Collection - School, College, Laptop & Tour Bags">
+  <meta name="twitter:description" content="Explore School Bags, College Backpacks, Laptop Briefcases, and Tour & Travel Bags at Govindraj Watch & Accessories Shop in Naigaon Bazar.">
+  <meta name="twitter:image" content="https://www.govindrajwatch.shop/assets/images/hero-watch.webp">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Store", "LocalBusiness"],
+        "@id": "https://www.govindrajwatch.shop/#store",
+        "name": "Govindraj Watch & Gift Center",
+        "url": "https://www.govindrajwatch.shop/",
+        "logo": "https://www.govindrajwatch.shop/assets/images/logo.png",
+        "image": "https://www.govindrajwatch.shop/assets/images/hero-watch.webp",
+        "telephone": "+918484080732",
+        "email": "contact@govindrajwatch.shop",
+        "priceRange": "₹",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Medewar Complex, Below Bank of Buldhana, Main Road",
+          "addressLocality": "Naigaon Bazar",
+          "addressRegion": "Maharashtra",
+          "postalCode": "431709",
+          "addressCountry": "IN"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body data-category="bags">
+
+  <!-- Main Navigation Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <div class="brand-header-center">
+          <a href="index.html" class="brand-logo">
+            <div class="brand-logo-icon"><img src="assets/images/logo.png" alt="Govindraj Watch Shop Logo"></div>
+            <div class="text-center">
+              <div class="brand-title">GOVINDRAJ WATCH AND GIFTS ACCESSORIES SHOP</div>
+              <div class="brand-subtitle">NAIGAON BAZAAR • AUTHORIZED DEALER</div>
+            </div>
+          </a>
+          <a href="javascript:void(0)" onclick="openRepairModal()" class="btn btn-primary btn-quick-repair" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; text-decoration: none; margin-left: 15px;"><i class="ri-tools-line"></i> Quick Repair</a>
+
+          <div class="nav-actions" style="position: absolute; right: 20px; top: 15px;">
+            <div class="lang-selector">
+              <button class="lang-btn" onclick="toggleLangDropdown()">
+                <i class="ri-global-line"></i> <span id="currentLangLabel">English</span> <i class="ri-arrow-down-s-line"></i>
+              </button>
+              <div class="lang-dropdown" id="langDropdown">
+                <div class="lang-option" onclick="setLanguage('en')">English</div>
+                <div class="lang-option" onclick="setLanguage('hi')">हिंदी</div>
+                <div class="lang-option" onclick="setLanguage('mr')">मराठी</div>
+              </div>
+            </div>
+            <button class="icon-btn" onclick="openCartDrawer()" title="Shopping Cart"><i class="ri-shopping-cart-2-line"></i><span class="badge-count cart-counter">0</span></button>
+            <a href="admin.html" class="icon-btn" title="Admin Portal Login - Manage Products & Content"><i class="ri-user-settings-line"></i></a>
+            <a href="contact.html" class="icon-btn" title="Wishlist"><i class="ri-heart-line"></i><span class="badge-count wishlist-counter">0</span></a>
+            <button class="mobile-toggle" id="mobileNavToggle"><i class="ri-menu-line"></i></button>
+          </div>
+        </div>
+
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="index.html" class="nav-link" data-i18n="nav_home">Home</a></li>
+          <li><a href="watches.html" class="nav-link" data-i18n="nav_watches">Watches</a></li>
+          <li><a href="wall-clocks.html" class="nav-link" data-i18n="nav_wall_clocks">Wall Clocks</a></li>
+          <li><a href="belts.html" class="nav-link" data-i18n="nav_belts">Belts</a></li>
+          <li><a href="wallets.html" class="nav-link" data-i18n="nav_wallets">Wallets</a></li>
+          <li><a href="goggles.html" class="nav-link" data-i18n="nav_goggles">Goggles</a></li>
+          <li><a href="caps.html" class="nav-link" data-i18n="nav_caps">Caps</a></li>
+          <li><a href="keychains.html" class="nav-link" data-i18n="nav_keychains">Keychains</a></li>
+          <li><a href="gift-frames.html" class="nav-link" data-i18n="nav_gift_frames">Gift Frames</a></li>
+          <li><a href="bags.html" class="nav-link active" data-i18n="nav_bags">Bags</a></li>
+          <li><a href="gifts.html" class="nav-link" data-i18n="nav_gifts">Gifts</a></li>
+          <li><a href="stationery.html" class="nav-link">Stationery</a></li>
+          <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section-padding" style="background: var(--gradient-hero); padding: 50px 0;">
+    <div class="container text-center">
+      <span class="badge-gold" style="margin-bottom:15px; display:inline-block;">Ergonomic & Premium Quality</span>
+      <h1 class="font-heading text-gradient" style="font-size: 3rem; margin-bottom: 10px;">Bags Collection</h1>
+      <p style="color: var(--text-secondary); max-width:650px; margin:0 auto;">Explore Waterproof School Bags, College Backpacks, Executive Laptop Briefcases & Tour Travel Bags.</p>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container">
+      <!-- Category Filter Pills for Bags -->
+      <div class="category-filter-pills" style="margin-bottom: 30px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+        <button class="filter-pill active" data-filter="all" onclick="filterBags('all', this)"><i class="ri-apps-2-line"></i> All Bags</button>
+        <button class="filter-pill" data-filter="school-bags" onclick="filterBags('school-bags', this)"><i class="ri-book-open-line"></i> School Bags</button>
+        <button class="filter-pill" data-filter="college-bags" onclick="filterBags('college-bags', this)"><i class="ri-graduation-cap-line"></i> College Bags</button>
+        <button class="filter-pill" data-filter="laptop-bags" onclick="filterBags('laptop-bags', this)"><i class="ri-laptop-line"></i> Laptop Bags</button>
+        <button class="filter-pill" data-filter="tour-bags" onclick="filterBags('tour-bags', this)"><i class="ri-suitcase-line"></i> Tour & Travel Bags</button>
+      </div>
+
+      <div class="filter-bar">
+        <div class="search-box">
+          <i class="ri-search-line"></i>
+          <input type="text" id="searchInput" placeholder="Search school, college, laptop, travel bags..." data-i18n="search_placeholder">
+        </div>
+
+        <div class="filter-group">
+          <select class="filter-select" onchange="applySort(this.value)">
+            <option value="featured" data-i18n="sort_featured">Sort: Featured</option>
+            <option value="low-high" data-i18n="sort_low_high">Price: Low to High</option>
+            <option value="high-low" data-i18n="sort_high_low">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 20px;">
+        <h3 style="color: var(--text-primary);" id="productsCountBadge">Showing All Bags</h3>
+      </div>
+
+      <div class="products-grid" id="catalogProductsGrid"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="brand-logo" style="margin-bottom: 20px;">
+            <div class="brand-logo-icon"><img src="assets/images/logo.png" alt="Govindraj Watch Shop Logo"></div>
+            <div>
+              <div class="brand-title">GOVINDRAJ</div>
+              <div class="brand-subtitle">WATCH & ACCESSORIES</div>
+            </div>
+          </div>
+          <p style="font-size: 0.95rem;" data-i18n="hero_desc">Discover Naigaon Bazaar's finest selection of luxury branded watches, genuine leather belts, wallets, designer sunglasses, and premium gift frames.</p>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="section_categories">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="watches.html" data-i18n="nav_watches">Watches</a></li>
+            <li><a href="wall-clocks.html" data-i18n="nav_wall_clocks">Wall Clocks</a></li>
+            <li><a href="belts.html" data-i18n="nav_belts">Belts</a></li>
+            <li><a href="wallets.html" data-i18n="nav_wallets">Wallets</a></li>
+            <li><a href="goggles.html" data-i18n="nav_goggles">Goggles</a></li>
+            <li><a href="bags.html" data-i18n="nav_bags">Bags</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="nav_gifts">More Categories</h4>
+          <ul class="footer-links">
+            <li><a href="caps.html" data-i18n="nav_caps">Caps</a></li>
+            <li><a href="keychains.html" data-i18n="nav_keychains">Keychains</a></li>
+            <li><a href="gift-frames.html" data-i18n="nav_gift_frames">Gift Frames</a></li>
+            <li><a href="gifts.html" data-i18n="nav_gifts">Gifts</a></li>
+            <li><a href="stationery.html">Stationery</a></li>
+            <li><a href="contact.html" data-i18n="nav_contact">Contact Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Store Address</h4>
+          <ul class="footer-links">
+            <li><i class="ri-map-pin-line"></i> <span data-i18n="address">Medewar Complex, Below Bank of Buldhana, Main Road, Naigaon Bazaar, Maharashtra</span></li>
+            <li><i class="ri-phone-line"></i> Contact: 8484080732</li>
+            <li><i class="ri-time-line"></i> Mon - Sun: 9:00 AM - 9:00 PM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-credits-bar">
+        <div class="credit-box">
+          <i class="ri-user-star-line text-primary-color"></i>
+          <div>
+            <span data-i18n="footer_developed_by">Developed by : Govindraj Ambatwar</span><br>
+            <strong>📞 8484080732</strong>
+          </div>
+        </div>
+
+        <div>
+          <p>&copy; 2026 Govindraj Watch and Gifts Accessories Shop. <span data-i18n="footer_rights">All Rights Reserved.</span></p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500">
+  <defs>
+    <linearGradient id="ownerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#aa841e"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#ownerGrad)"/>
+  <circle cx="200" cy="180" r="80" fill="none" stroke="url(#goldAccent)" stroke-width="4"/>
+  <circle cx="200" cy="160" r="45" fill="rgba(212, 175, 55, 0.2)" stroke="url(#goldAccent)" stroke-width="2"/>
+  <path d="M 120 330 C 120 240, 280 240, 280 330 Z" fill="rgba(212, 175, 55, 0.2)" stroke="url(#goldAccent)" stroke-width="2"/>
+  <rect x="30" y="380" width="340" height="90" rx="16" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="200" y="420" font-family="'Outfit', sans-serif" font-weight="bold" font-size="22" fill="#ffffff" text-anchor="middle">Govindraj Ambatwar</text>
+  <text x="200" y="445" font-family="'Inter', sans-serif" font-weight="600" font-size="14" fill="url(#goldAccent)" text-anchor="middle" letter-spacing="2">SHOP OWNER &amp; FOUNDER</text>
+</svg>

@@ -1,0 +1,48 @@
+{
+  "siteConfig": {
+    "brandName": "GOVINDRAJ WATCH AND GIFTS ACCESSORIES SHOP",
+    "brandSubtitle": "NAIGAON BAZAAR • AUTHORIZED DEALER",
+    "phone": "8484080732",
+    "whatsapp": "8484080732",
+    "email": "contact@govindrajwatchshop.com",
+    "address": "Medewar Complex, Below Bank of Buldhana, Main Road, Naigaon Bazaar",
+    "announcement": "Medewar Complex, Below Bank of Buldhana, Main Road, Naigaon Bazaar",
+    "heroBadge": "Premium Luxury Collection 2026",
+    "heroTitle": "Elegance & Style For Every Occasion",
+    "heroDesc": "Discover Naigaon Bazaar's finest selection of luxury branded watches, genuine leather belts, wallets, designer sunglasses, and premium gift frames.",
+    "aboutStoryTitle": "15+ Years of Trust & Quality",
+    "ownerName": "Govindraj Ambatwar",
+    "ownerPhone": "8484080732",
+    "upiId": "8484080732@upi",
+    "upiName": "Govindraj Watch Shop",
+    "razorpayKey": "rzp_test_GovindrajShopKey123",
+    "developerName": "Omkar Katturwar",
+    "developerPhone": "7219290885"
+  },
+  "products": [],
+  "orders": [
+    {
+      "id": "ORD_1785749001",
+      "name": "Omkar Katturwar",
+      "phone": "7219290885",
+      "address": "Navle Complex, Naigaon Bazaar",
+      "payment": "UPI / GPay (UTR: 4098129381)",
+      "paymentStatus": "Paid",
+      "status": "Completed",
+      "date": "03 Aug 2026, 04:15 PM",
+      "cart": [
+        {
+          "id": "watch-1",
+          "name": "Titan Nebula 18K Gold Craftsmanship Watch",
+          "price": 12999,
+          "qty": 1
+        }
+      ],
+      "total": 12999
+    }
+  ],
+  "adminCreds": {
+    "user": "admin",
+    "pass": "govindraj123"
+  }
+}
