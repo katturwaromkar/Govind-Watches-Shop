@@ -138,7 +138,7 @@
             </div>
             <button class="icon-btn" onclick="openCartDrawer()" title="Shopping Cart"><i class="ri-shopping-cart-2-line"></i><span class="badge-count cart-counter">0</span></button>
             <a href="admin.html" class="icon-btn" title="Admin Portal Login - Manage Products & Content"><i class="ri-user-settings-line"></i></a>
-            <a href="contact.html" class="icon-btn" title="Wishlist"><i class="ri-heart-line"></i><span class="badge-count wishlist-counter">0</span></a>
+            <button onclick="openWishlistModal()" class="icon-btn" title="View Wishlist"><i class="ri-heart-line"></i><span class="badge-count wishlist-counter">0</span></button>
             <button class="mobile-toggle" id="mobileNavToggle"><i class="ri-menu-line"></i></button>
           </div>
         </div>
@@ -155,7 +155,6 @@
           <li><a href="gift-frames.html" class="nav-link">Gift Frames</a></li>
           <li><a href="bags.html" class="nav-link" data-i18n="nav_bags">Bags</a></li>
           <li><a href="gifts.html" class="nav-link" data-i18n="nav_gifts">Gifts</a></li>
-          <li><a href="stationery.html" class="nav-link">Stationery</a></li>
           <li><a href="contact.html" class="nav-link" data-i18n="nav_contact">Contact</a></li>
         </ul>
       </nav>
@@ -163,23 +162,62 @@
   </header>
 
   <!-- Hero Banner Section -->
+  <!-- Hero Banner Section with Video & Image Slider -->
   <section class="hero" id="heroSection">
-    <div class="hero-bg-overlay"></div>
+    <div class="hero-slider-container">
+      <div class="hero-slide active" data-slide-type="video" data-slide-index="0">
+        <video class="hero-video-bg" autoplay loop muted playsinline poster="assets/images/cat-watches.webp">
+          <source src="assets/vedios/video-watch-1.mp4" type="video/mp4">
+        </video>
+        <div class="hero-slide-overlay"></div>
+      </div>
+      <div class="hero-slide" data-slide-type="video" data-slide-index="1">
+        <video class="hero-video-bg" loop muted playsinline poster="assets/images/cat-wall-clocks.webp">
+          <source src="assets/vedios/video-watch-2.mp4" type="video/mp4">
+        </video>
+        <div class="hero-slide-overlay"></div>
+      </div>
+      <div class="hero-slide" data-slide-type="video" data-slide-index="2">
+        <video class="hero-video-bg" loop muted playsinline poster="assets/images/cat-belts-wallets.webp">
+          <source src="assets/vedios/video-watch-3.mp4" type="video/mp4">
+        </video>
+        <div class="hero-slide-overlay"></div>
+      </div>
+      <div class="hero-slide" data-slide-type="image" data-slide-index="3">
+        <div class="hero-image-bg" style="background-image: url('assets/images/cat-goggles.webp');"></div>
+        <div class="hero-slide-overlay"></div>
+      </div>
+    </div>
+
     <div class="hero-glow"></div>
-    <div class="container text-center">
-      <div class="hero-content scroll-reveal" style="max-width: 820px; margin: 0 auto;">
-        <span class="hero-tag" data-i18n="hero_badge"><i class="ri-vip-crown-fill"></i> Premium Luxury Collection 2026</span>
-        <h1 class="hero-title font-heading" data-i18n="hero_title">Elegance & Style For Every Occasion</h1>
-        <p class="hero-desc" style="margin-left: auto; margin-right: auto;" data-i18n="hero_desc">Discover Naigaon Bazaar's finest selection of luxury branded watches, genuine leather belts, wallets, designer sunglasses, and premium gift frames.</p>
+    
+    <div class="container text-center" style="position: relative; z-index: 10;">
+      <div class="hero-content scroll-reveal" style="max-width: 840px; margin: 0 auto; background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(16px); padding: 40px 30px; border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <span class="hero-tag" data-i18n="hero_badge"><i class="ri-vip-crown-fill" style="color:#f59e0b;"></i> Premium Luxury Collection 2026</span>
+        <h1 class="hero-title font-heading" data-i18n="hero_title" style="margin-top: 15px;">Elegance & Style For Every Occasion</h1>
+        <p class="hero-desc" style="margin-left: auto; margin-right: auto; color: rgba(255,255,255,0.9); font-size: 1.05rem;" data-i18n="hero_desc">Discover Naigaon Bazaar's finest selection of luxury branded watches, genuine leather belts, wallets, designer sunglasses, and premium gift frames.</p>
         
         <div class="hero-feature-pills" style="margin-bottom: 30px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
-          <span class="hero-pill"><i class="ri-checkbox-circle-fill" style="color: var(--primary-color);"></i> 100% Authentic Branded Watches</span>
-          <span class="hero-pill"><i class="ri-checkbox-circle-fill" style="color: var(--primary-color);"></i> Genuine Leather Belts & Wallets</span>
+          <span class="hero-pill" style="background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2);"><i class="ri-checkbox-circle-fill" style="color: #10b981;"></i> 100% Authentic Branded Watches</span>
+          <span class="hero-pill" style="background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2);"><i class="ri-checkbox-circle-fill" style="color: #10b981;"></i> Genuine Leather Belts & Wallets</span>
+          <span class="hero-pill" style="background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.2);"><i class="ri-play-circle-line" style="color: #3b82f6;"></i> HD Video Showcase</span>
         </div>
 
-        <div class="hero-btns" style="justify-content: center;">
+        <div class="hero-btns" style="justify-content: center; gap: 15px;">
           <a href="watches.html" class="btn btn-primary" data-i18n="btn_explore">Explore Collection <i class="ri-arrow-right-line"></i></a>
           <a href="https://wa.me/918484080732" target="_blank" class="btn btn-whatsapp" data-i18n="btn_whatsapp_enquire"><i class="ri-whatsapp-line"></i> Enquire on WhatsApp</a>
+        </div>
+
+        <!-- Slider Controls & Indicators -->
+        <div class="hero-slider-nav" style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 25px;">
+          <button class="hero-nav-btn prev-btn" onclick="prevHeroSlide()" title="Previous Slide" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"><i class="ri-arrow-left-s-line" style="font-size: 20px;"></i></button>
+          <div class="hero-slider-dots" style="display: flex; gap: 8px;">
+            <span class="dot active" onclick="goToHeroSlide(0)"></span>
+            <span class="dot" onclick="goToHeroSlide(1)"></span>
+            <span class="dot" onclick="goToHeroSlide(2)"></span>
+            <span class="dot" onclick="goToHeroSlide(3)"></span>
+          </div>
+          <button class="hero-nav-btn next-btn" onclick="nextHeroSlide()" title="Next Slide" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s;"><i class="ri-arrow-right-s-line" style="font-size: 20px;"></i></button>
         </div>
       </div>
     </div>

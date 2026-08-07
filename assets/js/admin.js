@@ -31,6 +31,17 @@ function saveAdminCredentials(user, pass) {
   localStorage.setItem('govind_admin_creds', JSON.stringify({ user: user || 'admin', pass: pass || 'govindraj123' }));
 }
 
+function getAdminToken() {
+  return sessionStorage.getItem('govind_admin_token') || localStorage.getItem('govind_admin_token') || 'govind_admin_auth_token_2026';
+}
+
+function getAuthHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'X-Admin-Token': getAdminToken()
+  };
+}
+
 function checkAdminSession() {
   const sessAuth = sessionStorage.getItem('govind_admin_auth');
   const localAuth = localStorage.getItem('govind_admin_auth');
@@ -88,6 +99,10 @@ async function handleAdminLogin(event) {
     if (res.ok) {
       const data = await res.json();
       if (data.success) {
+        if (data.token) {
+          sessionStorage.setItem('govind_admin_token', data.token);
+          localStorage.setItem('govind_admin_token', data.token);
+        }
         sessionStorage.setItem('govind_admin_auth', 'true');
         localStorage.setItem('govind_admin_auth', 'true');
         checkAdminSession();
@@ -256,7 +271,7 @@ function handleDeleteOrder(orderId) {
 async function loadAdminRepairs() {
   let repairs = [];
   try {
-    const res = await fetch('/api/repairs');
+    const res = await fetch('/api/repairs', { headers: getAuthHeaders() });
     if (res.ok) {
       const data = await res.json();
       if (data.success && data.repairs) {
@@ -326,7 +341,7 @@ async function handleRepairStatusChange(repairId, newStatus) {
   try {
     await fetch(`/api/repairs/${repairId}`, {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ status: newStatus })
     });
   } catch (e) {
@@ -342,7 +357,8 @@ async function handleDeleteRepair(repairId) {
     }
     try {
       await fetch(`/api/repairs/${repairId}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: getAuthHeaders()
       });
     } catch (e) {
       console.warn('API delete failed:', e);

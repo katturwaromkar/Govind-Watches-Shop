@@ -128,30 +128,53 @@ function applyDynamicSiteConfig() {
   }
 }
 
+let heroSlideIndex = 0;
+let heroSlideTimer = null;
+
+function goToHeroSlide(index) {
+  const slides = document.querySelectorAll('#heroSection .hero-slide');
+  const dots = document.querySelectorAll('#heroSection .hero-slider-dots .dot');
+  if (!slides || slides.length === 0) return;
+
+  heroSlideIndex = (index + slides.length) % slides.length;
+
+  slides.forEach((slide, idx) => {
+    const isTarget = idx === heroSlideIndex;
+    slide.classList.toggle('active', isTarget);
+    const video = slide.querySelector('video');
+    if (video) {
+      if (isTarget) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === heroSlideIndex);
+  });
+}
+
+function nextHeroSlide() {
+  goToHeroSlide(heroSlideIndex + 1);
+}
+
+function prevHeroSlide() {
+  goToHeroSlide(heroSlideIndex - 1);
+}
+
 function initHeroSlideshow() {
-  const heroImg = document.getElementById('heroSlideImage');
-  if (!heroImg) return;
+  const slides = document.querySelectorAll('#heroSection .hero-slide');
+  if (!slides || slides.length === 0) return;
 
-  const slides = [
-    { src: 'assets/images/hero-watch.webp', alt: 'Luxury Wristwatches' },
-    { src: 'assets/images/cat-wall-clocks.webp', alt: 'Designer Wall Clocks' },
-    { src: 'assets/images/cat-belts-wallets.webp', alt: 'Genuine Leather Belts & Wallets' },
-    { src: 'assets/images/cat-goggles.webp', alt: 'Designer Sunglasses & Eyewear' },
-    { src: 'assets/images/cat-gifts.webp', alt: 'Royal Gift Hampers & Frames' },
-    { src: 'assets/images/watch-gshock.webp', alt: 'Casio G-Shock Watches' },
-    { src: 'assets/images/wallet-collection.webp', alt: 'RFID Leather Wallets' }
-  ];
+  goToHeroSlide(0);
 
-  let currentIndex = 0;
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    heroImg.style.opacity = '0';
-    setTimeout(() => {
-      heroImg.src = slides[currentIndex].src;
-      heroImg.alt = slides[currentIndex].alt;
-      heroImg.style.opacity = '1';
-    }, 400);
-  }, 3000);
+  if (heroSlideTimer) clearInterval(heroSlideTimer);
+  heroSlideTimer = setInterval(() => {
+    nextHeroSlide();
+  }, 7000);
 }
 
 // --------------------------------------------------------------------------
@@ -1423,3 +1446,108 @@ async function submitRepairRequest(event) {
   showToast('Repair Service Booking request generated! Redirecting to WhatsApp...');
   window.open(whatsappUrl, '_blank');
 }
+
+// --------------------------------------------------------------------------
+// DYNAMIC WISHLIST MODAL & ENGINE
+// --------------------------------------------------------------------------
+function getWishlist() {
+  try {
+    const saved = localStorage.getItem('govind_wishlist');
+    return saved ? JSON.parse(saved) : [];
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveWishlist(list) {
+  localStorage.setItem('govind_wishlist', JSON.stringify(list));
+  updateWishlistCounters();
+}
+
+function toggleWishlist(productId) {
+  let list = getWishlist();
+  const index = list.indexOf(productId);
+  if (index >= 0) {
+    list.splice(index, 1);
+    showToast('Item removed from your Wishlist');
+  } else {
+    list.push(productId);
+    showToast('Item saved to your Wishlist ❤️');
+  }
+  saveWishlist(list);
+  if (document.getElementById('wishlistModal')?.classList.contains('active')) {
+    renderWishlistModal();
+  }
+}
+
+function updateWishlistCounters() {
+  const count = getWishlist().length;
+  document.querySelectorAll('.wishlist-counter').forEach(el => {
+    el.textContent = count;
+  });
+}
+
+function openWishlistModal() {
+  let modal = document.getElementById('wishlistModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'wishlistModal';
+    modal.className = 'modal-overlay';
+    modal.innerHTML = `
+      <div class="modal-card" style="max-width:550px;">
+        <div class="modal-header">
+          <h3 style="margin:0; font-size:1.3rem; display:flex; align-items:center; gap:8px;"><i class="ri-heart-3-fill" style="color:#ef4444;"></i> My Wishlist</h3>
+          <button class="modal-close-btn" onclick="closeWishlistModal()">&times;</button>
+        </div>
+        <div id="wishlistBody" class="modal-body" style="max-height:400px; overflow-y:auto; padding:15px;"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+  renderWishlistModal();
+  modal.classList.add('active');
+}
+
+function closeWishlistModal() {
+  const modal = document.getElementById('wishlistModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function renderWishlistModal() {
+  const body = document.getElementById('wishlistBody');
+  if (!body) return;
+  const wishIds = getWishlist();
+  const allProds = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
+  const wishProds = allProds.filter(p => wishIds.includes(p.id));
+
+  if (wishProds.length === 0) {
+    body.innerHTML = `
+      <div style="text-align:center; padding:35px 15px;">
+        <i class="ri-heart-line" style="font-size:48px; color:var(--text-muted); display:block; margin-bottom:10px;"></i>
+        <h4 style="margin:0 0 5px 0;">Your Wishlist is Empty</h4>
+        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:15px;">Explore luxury watches & accessories and save your favorite items!</p>
+        <button onclick="closeWishlistModal()" class="btn btn-primary" style="padding:6px 16px; font-size:0.85rem;">Browse Products</button>
+      </div>
+    `;
+    return;
+  }
+
+  body.innerHTML = wishProds.map(p => `
+    <div style="display:flex; align-items:center; gap:15px; padding:12px 0; border-bottom:1px solid var(--border-color);">
+      <img src="${p.image || ''}" alt="${p.name}" style="width:50px; height:50px; object-fit:cover; border-radius:8px;">
+      <div style="flex:1;">
+        <div style="font-weight:700; font-size:0.92rem; color:var(--text-primary);">${p.name}</div>
+        <div style="font-size:0.82rem; color:var(--primary-color); font-weight:700;">₹${(p.price || 0).toLocaleString('en-IN')}</div>
+      </div>
+      <button class="btn btn-primary" style="padding:5px 10px; font-size:0.8rem;" onclick="addToCart('${p.id}')"><i class="ri-shopping-bag-3-line"></i> Add</button>
+      <button class="btn btn-outline" style="padding:5px 8px; font-size:0.8rem; border-color:#ef4444; color:#ef4444;" onclick="toggleWishlist('${p.id}')" title="Remove"><i class="ri-delete-bin-line"></i></button>
+    </div>
+  `).join('');
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', updateWishlistCounters);
+} else {
+  updateWishlistCounters();
+}
+
