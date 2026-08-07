@@ -1042,11 +1042,18 @@ function closeCheckoutModal() {
 }
 
 function submitWhatsAppOrder(event) {
-  event.preventDefault();
-  const name = document.getElementById('custName').value.trim();
-  const phone = document.getElementById('custPhone').value.trim();
-  const address = document.getElementById('custAddress').value.trim();
-  const payment = document.getElementById('custPayment').value;
+  if (event && event.preventDefault) event.preventDefault();
+  const nameEl = document.getElementById('custName');
+  const phoneEl = document.getElementById('custPhone');
+  const addressEl = document.getElementById('custAddress');
+  const paymentEl = document.getElementById('custPayment');
+
+  if (!nameEl || !phoneEl || !addressEl || !paymentEl) return;
+
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.trim();
+  const address = addressEl.value.trim();
+  const payment = paymentEl.value;
   const cart = getCart();
 
   if (cart.length === 0) return;
@@ -1352,14 +1359,24 @@ function closeRepairModal() {
 }
 
 async function submitRepairRequest(event) {
-  event.preventDefault();
-  const name = document.getElementById('custRepairName').value.trim();
-  const phone = document.getElementById('custRepairPhone').value.trim();
-  const category = document.getElementById('repairCategory').value;
-  const brandModel = document.getElementById('repairBrandModel').value.trim() || 'Standard / Unspecified';
-  const issue = document.getElementById('repairIssue').value.trim();
-  const date = document.getElementById('repairDate').value || new Date().toLocaleDateString('en-IN');
-  const timeSlot = document.getElementById('repairTimeSlot').value;
+  if (event && event.preventDefault) event.preventDefault();
+  const nameEl = document.getElementById('custRepairName');
+  const phoneEl = document.getElementById('custRepairPhone');
+  const categoryEl = document.getElementById('repairCategory');
+  const brandModelEl = document.getElementById('repairBrandModel');
+  const issueEl = document.getElementById('repairIssue');
+  const dateEl = document.getElementById('repairDate');
+  const timeSlotEl = document.getElementById('repairTimeSlot');
+
+  if (!nameEl || !phoneEl || !categoryEl || !issueEl) return;
+
+  const name = nameEl.value.trim();
+  const phone = phoneEl.value.trim();
+  const category = categoryEl.value;
+  const brandModel = (brandModelEl ? brandModelEl.value.trim() : '') || 'Standard / Unspecified';
+  const issue = issueEl.value.trim();
+  const date = (dateEl ? dateEl.value : '') || new Date().toLocaleDateString('en-IN');
+  const timeSlot = timeSlotEl ? timeSlotEl.value : 'Anytime';
 
   const repairData = {
     name,

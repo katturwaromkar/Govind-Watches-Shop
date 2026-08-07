@@ -106,7 +106,8 @@
             </div>
           </a>
 
-          <div class="nav-actions" style="position: absolute; right: 20px; top: 15px;">
+          <div class="nav-actions">
+            <a href="javascript:void(0)" onclick="openRepairModal()" class="btn btn-primary btn-quick-repair" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;"><i class="ri-tools-line"></i> Quick Repair</a>
             <div class="lang-selector">
               <button class="lang-btn" onclick="toggleLangDropdown()">
                 <i class="ri-global-line"></i> <span id="currentLangLabel">English</span> <i class="ri-arrow-down-s-line"></i>
@@ -117,7 +118,9 @@
                 <div class="lang-option" onclick="setLanguage('mr')">मराठी</div>
               </div>
             </div>
-            <a href="contact.html" class="icon-btn"><i class="ri-heart-line"></i><span class="badge-count wishlist-counter">0</span></a>
+            <button class="icon-btn" onclick="openCartDrawer()" title="Shopping Cart"><i class="ri-shopping-cart-2-line"></i><span class="badge-count cart-counter">0</span></button>
+            <a href="admin.html" class="icon-btn" title="Admin Portal Login - Manage Products & Content"><i class="ri-user-settings-line"></i></a>
+            <a href="contact.html" class="icon-btn" title="Wishlist"><i class="ri-heart-line"></i><span class="badge-count wishlist-counter">0</span></a>
             <button class="mobile-toggle" id="mobileNavToggle"><i class="ri-menu-line"></i></button>
           </div>
         </div>

@@ -12,14 +12,23 @@ if (document.readyState === 'loading') {
 function getAdminCredentials() {
   try {
     const saved = localStorage.getItem('govind_admin_creds');
-    return saved ? JSON.parse(saved) : { user: 'admin', pass: 'govindraj123' };
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed && typeof parsed === 'object') {
+        return {
+          user: parsed.user || 'admin',
+          pass: parsed.pass || 'govindraj123'
+        };
+      }
+    }
   } catch (e) {
-    return { user: 'admin', pass: 'govindraj123' };
+    console.warn('Error reading stored admin credentials, defaulting to initial creds:', e);
   }
+  return { user: 'admin', pass: 'govindraj123' };
 }
 
 function saveAdminCredentials(user, pass) {
-  localStorage.setItem('govind_admin_creds', JSON.stringify({ user, pass }));
+  localStorage.setItem('govind_admin_creds', JSON.stringify({ user: user || 'admin', pass: pass || 'govindraj123' }));
 }
 
 function checkAdminSession() {
@@ -35,12 +44,12 @@ function checkAdminSession() {
     if (loginScreen) loginScreen.style.display = 'none';
     if (dashboard) dashboard.style.display = 'block';
     if (topActions) topActions.style.display = 'flex';
-    loadAdminAnalytics();
-    loadAdminOrders();
-    loadAdminRepairs();
-    loadAdminStock();
-    loadAdminProducts();
-    loadAdminSettings();
+    try { loadAdminAnalytics(); } catch(e) { console.error('Analytics load error:', e); }
+    try { loadAdminOrders(); } catch(e) { console.error('Orders load error:', e); }
+    try { loadAdminRepairs(); } catch(e) { console.error('Repairs load error:', e); }
+    try { loadAdminStock(); } catch(e) { console.error('Stock load error:', e); }
+    try { loadAdminProducts(); } catch(e) { console.error('Products load error:', e); }
+    try { loadAdminSettings(); } catch(e) { console.error('Settings load error:', e); }
   } else {
     if (loginScreen) loginScreen.style.display = 'block';
     if (dashboard) dashboard.style.display = 'none';
@@ -48,7 +57,7 @@ function checkAdminSession() {
   }
 }
 
-function handleAdminLogin(event) {
+async function handleAdminLogin(event) {
   if (event && event.preventDefault) event.preventDefault();
 
   const userEl = document.getElementById('adminUser');
@@ -60,13 +69,37 @@ function handleAdminLogin(event) {
   const inputPass = passEl.value.trim();
   const creds = getAdminCredentials();
 
-  if (inputUser === creds.user.toLowerCase() && inputPass === creds.pass) {
+  const localSuccess = (inputUser === (creds.user || 'admin').toLowerCase() && inputPass === creds.pass);
+
+  if (localSuccess) {
     sessionStorage.setItem('govind_admin_auth', 'true');
     localStorage.setItem('govind_admin_auth', 'true');
     checkAdminSession();
-  } else {
-    alert('Invalid Admin Credentials!\nPlease check your username and password.');
+    return false;
   }
+
+  // Try API Login if server backend is reachable
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user: inputUser, pass: inputPass })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.success) {
+        sessionStorage.setItem('govind_admin_auth', 'true');
+        localStorage.setItem('govind_admin_auth', 'true');
+        checkAdminSession();
+        return false;
+      }
+    }
+  } catch (e) {
+    // API unavailable or offline mode
+  }
+
+  alert('Invalid Admin Credentials!\nPlease check your username and password.\n(Default: admin / govindraj123)');
+  passEl.focus();
   return false;
 }
 
@@ -322,7 +355,7 @@ async function handleDeleteRepair(repairId) {
 // INVENTORY & STOCK RECORD MONITOR TAB
 // --------------------------------------------------------------------------
 function loadAdminStock() {
-  const products = getLiveProducts();
+  const products = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
   renderAdminStockTable(products);
 }
 
@@ -330,7 +363,7 @@ function renderAdminStockTable(productsList) {
   const tbody = document.getElementById('adminStockTableBody');
   if (!tbody) return;
 
-  if (productsList.length === 0) {
+  if (!productsList || productsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px;">No inventory items found.</td></tr>`;
     return;
   }
@@ -348,12 +381,14 @@ function renderAdminStockTable(productsList) {
       badgeLabel = 'Low Stock Alert';
     }
 
+    const priceFormatted = (p.price || 0).toLocaleString('en-IN');
+
     return `
       <tr>
-        <td><img src="${p.image}" alt="${p.name}" class="product-thumb"></td>
-        <td><strong>${p.name}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${p.brand}</span></td>
-        <td><span class="badge-gold" style="font-size:0.75rem;">${p.category}</span></td>
-        <td><strong>₹${p.price.toLocaleString('en-IN')}</strong></td>
+        <td><img src="${p.image || ''}" alt="${p.name || ''}" class="product-thumb"></td>
+        <td><strong>${p.name || 'Unnamed Product'}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${p.brand || 'Govindraj'}</span></td>
+        <td><span class="badge-gold" style="font-size:0.75rem;">${p.category || 'General'}</span></td>
+        <td><strong>₹${priceFormatted}</strong></td>
         <td><strong style="font-size:1.1rem; color:${stock <= 3 ? '#ef4444' : 'var(--text-primary)'};">${stock} units</strong></td>
         <td><span class="badge-status ${badgeClass}" style="${stock === 0 ? 'background:#fee2e2; color:#dc2626;' : ''}">${badgeLabel}</span></td>
         <td>
@@ -366,22 +401,23 @@ function renderAdminStockTable(productsList) {
 }
 
 function filterAdminStock() {
-  const q = document.getElementById('stockSearchInput').value.toLowerCase().trim();
-  const products = getLiveProducts();
+  const qEl = document.getElementById('stockSearchInput');
+  const q = qEl ? qEl.value.toLowerCase().trim() : '';
+  const products = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
   if (!q) {
     renderAdminStockTable(products);
     return;
   }
-  const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+  const filtered = products.filter(p => (p.name || '').toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q));
   renderAdminStockTable(filtered);
 }
 
 function adjustProductStock(productId, delta) {
-  let products = getLiveProducts();
+  let products = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
   const p = products.find(prod => prod.id === productId);
   if (p) {
     p.stock = Math.max(0, (p.stock !== undefined ? p.stock : 12) + delta);
-    saveLiveProducts(products);
+    if (typeof saveLiveProducts === 'function') saveLiveProducts(products);
     loadAdminAnalytics();
     loadAdminStock();
   }
@@ -391,7 +427,7 @@ function adjustProductStock(productId, delta) {
 // PRODUCT CATALOG MANAGER TAB
 // --------------------------------------------------------------------------
 function loadAdminProducts() {
-  const products = getLiveProducts();
+  const products = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
   renderAdminProductsTable(products);
 }
 
@@ -399,34 +435,40 @@ function renderAdminProductsTable(productsList) {
   const tbody = document.getElementById('adminProductsTableBody');
   if (!tbody) return;
 
-  if (productsList.length === 0) {
+  if (!productsList || productsList.length === 0) {
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px;">No products found.</td></tr>`;
     return;
   }
 
-  tbody.innerHTML = productsList.map(p => `
+  tbody.innerHTML = productsList.map(p => {
+    const priceFormatted = (p.price || 0).toLocaleString('en-IN');
+    const oldPriceFormatted = p.oldPrice ? (p.oldPrice || 0).toLocaleString('en-IN') : null;
+
+    return `
     <tr>
-      <td><img src="${p.image}" alt="${p.name}" class="product-thumb"></td>
-      <td><strong>${p.name}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${p.id}</span></td>
-      <td><span class="badge-gold" style="font-size:0.75rem;">${p.category}</span></td>
-      <td>${p.brand}</td>
-      <td><strong>₹${p.price.toLocaleString('en-IN')}</strong> ${p.oldPrice ? `<span style="font-size:0.8rem; text-decoration:line-through; color:var(--text-muted);">₹${p.oldPrice.toLocaleString('en-IN')}</span>` : ''}</td>
+      <td><img src="${p.image || ''}" alt="${p.name || ''}" class="product-thumb"></td>
+      <td><strong>${p.name || 'Unnamed Product'}</strong><br><span style="font-size:0.8rem; color:var(--text-muted);">${p.id || ''}</span></td>
+      <td><span class="badge-gold" style="font-size:0.75rem;">${p.category || 'General'}</span></td>
+      <td>${p.brand || 'Govindraj'}</td>
+      <td><strong>₹${priceFormatted}</strong> ${oldPriceFormatted ? `<span style="font-size:0.8rem; text-decoration:line-through; color:var(--text-muted);">₹${oldPriceFormatted}</span>` : ''}</td>
       <td>
         <button class="btn btn-outline" style="padding:6px 12px; font-size:0.8rem; margin-right:6px;" onclick="openEditProductModal('${p.id}')"><i class="ri-edit-line"></i> Edit</button>
         <button class="btn btn-primary" style="padding:6px 12px; font-size:0.8rem; background:#ef4444; border-color:#ef4444;" onclick="handleDeleteProduct('${p.id}')"><i class="ri-delete-bin-line"></i></button>
       </td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function filterAdminProducts() {
-  const q = document.getElementById('adminSearchInput').value.toLowerCase().trim();
-  const products = getLiveProducts();
+  const qEl = document.getElementById('adminSearchInput');
+  const q = qEl ? qEl.value.toLowerCase().trim() : '';
+  const products = typeof getLiveProducts === 'function' ? getLiveProducts() : [];
   if (!q) {
     renderAdminProductsTable(products);
     return;
   }
-  const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+  const filtered = products.filter(p => (p.name || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q) || (p.category || '').toLowerCase().includes(q));
   renderAdminProductsTable(filtered);
 }
 
@@ -514,7 +556,7 @@ function getFieldValue(id) {
 }
 
 function loadAdminSettings() {
-  const config = getSiteConfig();
+  const config = typeof getSiteConfig === 'function' ? getSiteConfig() : {};
   setFieldValue('cfgBrandName', config.brandName);
   setFieldValue('cfgBrandSubtitle', config.brandSubtitle);
   setFieldValue('cfgPhone', config.phone);
