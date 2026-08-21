@@ -21,16 +21,25 @@ import ProductCard from "@/components/product/ProductCard";
 export const revalidate = 60;
 
 export default async function HomePage() {
-  const products = await prisma.product.findMany({
-    take: 8,
-    orderBy: { createdAt: "desc" },
-    include: { category: true, brand: true, images: true },
-  });
+  let products: any[] = [];
+  let categories: any[] = [];
+  let testimonials: any[] = [];
+  let blogs: any[] = [];
+  let settings: any = null;
 
-  const categories = await prisma.category.findMany({ take: 6 });
-  const testimonials = await prisma.testimonial.findMany({ take: 3 });
-  const blogs = await prisma.blog.findMany({ take: 3, where: { isPublished: true } });
-  const settings = await prisma.siteSettings.findFirst();
+  try {
+    products = await prisma.product.findMany({
+      take: 8,
+      orderBy: { createdAt: "desc" },
+      include: { category: true, brand: true, images: true },
+    });
+    categories = await prisma.category.findMany({ take: 6 });
+    testimonials = await prisma.testimonial.findMany({ take: 3 });
+    blogs = await prisma.blog.findMany({ take: 3, where: { isPublished: true } });
+    settings = await prisma.siteSettings.findFirst();
+  } catch (e) {
+    console.error("HomePage DB query fallback during build/render:", e);
+  }
 
   return (
     <div className="space-y-20 md:space-y-32 pb-24 bg-[#F5F1E8]">
