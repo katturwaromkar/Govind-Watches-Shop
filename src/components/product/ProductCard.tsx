@@ -95,6 +95,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           <img
             src={primaryImage}
             alt={product.name}
+            onError={(e) => {
+              e.currentTarget.src = "/logo.jpg";
+            }}
             className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
           />
         </Link>
