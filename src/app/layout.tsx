@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
@@ -19,6 +19,15 @@ const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  minimumScale: 1.0,
+  userScalable: false,
+  themeColor: "#07111F",
+};
 
 export const metadata: Metadata = {
   title: "Govindraj Watch & Gifts | Best Watch & Accessories Shop in Naigaon Bazaar",

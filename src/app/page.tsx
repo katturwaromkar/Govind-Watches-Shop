@@ -43,10 +43,26 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-20 md:space-y-32 pb-24 bg-[#F5F1E8]">
-      {/* SECTION 01 — FULL SCREEN CINEMATIC HERO (Midnight Navy #07111F) */}
+      {/* SECTION 01 — FULL SCREEN CINEMATIC HERO WITH VIDEO BACKDROP */}
       <section className="relative overflow-hidden bg-[#07111F] text-[#F8FAFC] border-b border-[#D6B36A]/20 pt-12 pb-20 lg:py-28">
+        {/* Ambient Horology Video Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200"
+            className="w-full h-full object-cover filter brightness-90 contrast-110"
+          >
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-hand-holding-a-luxury-gold-watch-41527-large.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07111F] via-[#07111F]/85 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#07111F] via-transparent to-[#07111F]/70" />
+        </div>
+
         {/* Subtle Horology Clock Markings Graphic Backdrop */}
-        <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-[#D6B36A]/10 pointer-events-none hidden lg:flex items-center justify-center">
+        <div className="absolute top-1/2 right-10 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-[#D6B36A]/10 pointer-events-none hidden lg:flex items-center justify-center z-0">
           <div className="w-[420px] h-[420px] rounded-full border border-[#D6B36A]/10 flex items-center justify-center">
             <div className="w-[280px] h-[280px] rounded-full border border-dashed border-[#D6B36A]/15" />
           </div>

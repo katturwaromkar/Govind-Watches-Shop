@@ -89,10 +89,10 @@ export default function Header() {
                 />
               </div>
               <div className="flex flex-col min-w-0 justify-center">
-                <span className="font-serif text-base xs:text-lg sm:text-xl font-extrabold tracking-wide sm:tracking-wider text-[#F8FAFC] group-hover:text-[#D6B36A] transition truncate leading-tight">
+                <span className="font-serif text-base xs:text-lg sm:text-xl font-extrabold tracking-wider text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] group-hover:text-[#F5E6BA] transition truncate leading-tight">
                   GOVINDRAJ
                 </span>
-                <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] xs:tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B36A] uppercase font-bold truncate">
+                <span className="text-[8.5px] xs:text-[9.5px] sm:text-[10.5px] tracking-[0.2em] sm:tracking-[0.25em] text-[#F3E5AB] uppercase font-bold truncate drop-shadow-[0_1px_1px_rgba(0,0,0,0.9)]">
                   WATCH & GIFTS • NAIGAON
                 </span>
               </div>
