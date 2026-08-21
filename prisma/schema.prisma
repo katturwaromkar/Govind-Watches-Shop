@@ -1,0 +1,263 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String          @id @default(uuid())
+  name         String
+  email        String          @unique
+  phone        String?
+  passwordHash String
+  role         String          @default("CUSTOMER") // CUSTOMER, ADMIN, STAFF
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  orders       Order[]
+  wishlists    Wishlist[]
+  carts        Cart[]
+  RepairRequest RepairRequest[]
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  parentId    String?
+  isFeatured  Boolean   @default(false)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Brand {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  logo        String?
+  description String?
+  isFeatured  Boolean   @default(false)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id               String                 @id @default(uuid())
+  name             String
+  slug             String                 @unique
+  sku              String                 @unique
+  description      String
+  shortDescription String?
+  price            Float
+  mrp              Float
+  discount         Float                  @default(0) // Percentage
+  gender           String                 @default("UNISEX") // MEN, WOMEN, COUPLE, KIDS, UNISEX
+  style            String? // CLASSIC, FORMAL, CASUAL, LUXURY, AUTOMATIC, CHRONOGRAPH, SMART, DIGITAL
+  movement         String? // QUARTZ, AUTOMATIC, SMART, DIGITAL
+  dialColor        String?
+  strapMaterial    String?
+  strapColor       String?
+  waterResistance  String?
+  warranty         String?                @default("1 Year Brand Warranty")
+  isNewArrival     Boolean                @default(false)
+  isBestseller     Boolean                @default(false)
+  isFeatured       Boolean                @default(false)
+  isSale           Boolean                @default(false)
+  stock            Int                    @default(10)
+  categoryId       String
+  category         Category               @relation(fields: [categoryId], references: [id])
+  brandId          String
+  brand            Brand                  @relation(fields: [brandId], references: [id])
+  images           ProductImage[]
+  specifications   ProductSpecification[]
+  cartItems        CartItem[]
+  wishlistItems    WishlistItem[]
+  orderItems       OrderItem[]
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  isPrimary Boolean  @default(false)
+  altText   String?
+}
+
+model ProductSpecification {
+  id        String  @id @default(uuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  key       String
+  value     String
+}
+
+model Cart {
+  id           String     @id @default(uuid())
+  userId       String?
+  user         User?      @relation(fields: [userId], references: [id])
+  sessionToken String?    @unique
+  items        CartItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+}
+
+model Wishlist {
+  id           String         @id @default(uuid())
+  userId       String?
+  user         User?          @relation(fields: [userId], references: [id])
+  sessionToken String?        @unique
+  items        WishlistItem[]
+  createdAt    DateTime       @default(now())
+}
+
+model WishlistItem {
+  id         String   @id @default(uuid())
+  wishlistId String
+  wishlist   Wishlist @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model Order {
+  id            String      @id @default(uuid())
+  orderId       String      @unique // e.g. GOV-2026-9921
+  userId        String?
+  user          User?       @relation(fields: [userId], references: [id])
+  customerName  String
+  customerEmail String
+  customerPhone String
+  address       String
+  city          String
+  state         String
+  pincode       String
+  totalAmount   Float
+  paymentMethod String      @default("COD") // COD, RAZORPAY, WHATSAPP
+  paymentStatus String      @default("PENDING") // PENDING, PAID, FAILED
+  orderStatus   String      @default("PROCESSING") // PROCESSING, SHIPPED, DELIVERED, CANCELLED
+  items         OrderItem[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Float
+}
+
+model RepairRequest {
+  id                 String   @id @default(uuid())
+  repairId           String   @unique // e.g. REP-2026-8812
+  userId             String?
+  user               User?    @relation(fields: [userId], references: [id])
+  customerName       String
+  phone              String
+  whatsapp           String
+  email              String?
+  serviceType        String   // Battery Change, Glass Fitting, Machine Servicing, Strap Fitting, Wall Clock Repair, Bag Repair
+  brand              String?
+  model              String?
+  problemDescription String
+  preferredDate      String?
+  preferredTime      String?
+  status             String   @default("PENDING") // PENDING, CONFIRMED, IN_PROGRESS, READY, COMPLETED, CANCELLED
+  estimatedCost      Float?
+  technicianNotes    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Offer {
+  id             String    @id @default(uuid())
+  title          String
+  subtitle       String?
+  image          String?
+  couponCode     String?   @unique
+  discountPercent Float?
+  active         Boolean   @default(true)
+  startDate      DateTime?
+  endDate        DateTime?
+}
+
+model Testimonial {
+  id           String   @id @default(uuid())
+  customerName String
+  rating       Int      @default(5)
+  reviewText   String
+  location     String?  @default("Naigaon Bazaar")
+  isPublished  Boolean  @default(true)
+  createdAt    DateTime @default(now())
+}
+
+model SiteSettings {
+  id                   String  @id @default("1")
+  onlineOrdersEnabled  Boolean @default(true)
+  onlinePaymentEnabled Boolean @default(true)
+  announcementText     String  @default("Premium Watches • Accessories • Gifts • Watch Repair | Naigaon Bazaar")
+  whatsappNumber       String  @default("918484080732")
+  storeAddress         String  @default("Medewar Complex, Below Bank of Buldhana, Main Road, Naigaon Bazar, Nanded, Maharashtra - 431709")
+  phone                String  @default("+918484080732")
+  email                String  @default("contact@govindrajwatch.shop")
+  heroTitle            String  @default("TIMELESS LUXURY & ELEGANCE")
+  heroSubtitle         String  @default("Discover authentic watches, genuine leather accessories & custom gifts at Naigaon's premier digital showroom.")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userEmail String
+  action    String
+  entity    String
+  details   String?
+  createdAt DateTime @default(now())
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  coverImage  String
+  author      String   @default("Govindraj Watch Experts")
+  category    String   @default("Watch Care")
+  isPublished Boolean  @default(true)
+  readTime    String   @default("4 min read")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactEnquiry {
+  id        String   @id @default(uuid())
+  name      String
+  phone     String
+  email     String?
+  subject   String
+  message   String
+  status    String   @default("UNREAD") // UNREAD, READ, REPLIED, CLOSED
+  createdAt DateTime @default(now())
+}
+
