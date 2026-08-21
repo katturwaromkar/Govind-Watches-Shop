@@ -80,16 +80,20 @@ export default function Header() {
           {/* Main Header Bar */}
           <div className="flex items-center justify-between h-20 gap-6">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3 group min-w-0 flex-shrink-0">
-              <div className="w-10 h-10 rounded-[4px] bg-[#0D1B2A] border border-[#D6B36A]/40 flex items-center justify-center text-[#D6B36A] font-serif font-bold text-xl group-hover:border-[#D6B36A] transition">
-                G
+            <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0 flex-shrink-0">
+              <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-[2px] bg-gradient-to-tr from-[#D6B36A] via-[#F5E6BA] to-[#997736] shadow-md group-hover:scale-105 transition duration-300">
+                <img
+                  src="/logo.jpg"
+                  alt="Govindraj Watch & Gifts Logo"
+                  className="w-full h-full rounded-full object-cover bg-[#0D1B2A]"
+                />
               </div>
-              <div className="flex flex-col min-w-0">
-                <span className="font-serif text-lg sm:text-xl font-bold tracking-wider text-[#F8FAFC] group-hover:text-[#D6B36A] transition">
+              <div className="flex flex-col min-w-0 justify-center">
+                <span className="font-serif text-base xs:text-lg sm:text-xl font-extrabold tracking-wide sm:tracking-wider text-[#F8FAFC] group-hover:text-[#D6B36A] transition truncate leading-tight">
                   GOVINDRAJ
                 </span>
-                <span className="text-[9px] tracking-[0.25em] text-[#D6B36A] uppercase font-semibold">
-                  Watch & Accessories • Naigaon
+                <span className="text-[8px] xs:text-[9px] sm:text-[10px] tracking-[0.16em] xs:tracking-[0.2em] sm:tracking-[0.25em] text-[#D6B36A] uppercase font-bold truncate">
+                  WATCH & GIFTS • NAIGAON
                 </span>
               </div>
             </Link>

@@ -94,10 +94,14 @@ export default function Footer() {
         {/* Bottom Metadata & Guarantee */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[#AAB6C4] text-[11px] pt-4">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-[4px] bg-[#0D1B2A] border border-[#D6B36A]/40 flex items-center justify-center text-[#D6B36A] font-serif font-bold">
-              G
+            <div className="w-9 h-9 rounded-full p-[1.5px] bg-gradient-to-tr from-[#D6B36A] to-[#997736] flex-shrink-0">
+              <img
+                src="/logo.jpg"
+                alt="Govindraj Watch & Gifts Logo"
+                className="w-full h-full rounded-full object-cover bg-[#0D1B2A]"
+              />
             </div>
-            <p>© 2026 Govindraj Watch & Accessories. Naigaon Bazaar, Maharashtra.</p>
+            <p>© 2026 Govindraj Watch & Gifts. Naigaon Bazaar, Nanded, Maharashtra.</p>
           </div>
 
           <div className="flex items-center space-x-2 text-[#D6B36A] font-medium">

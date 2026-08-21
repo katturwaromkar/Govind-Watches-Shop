@@ -21,9 +21,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Govindraj Watch & Accessories | Best Watch Shop in Naigaon Bazaar Nanded",
+  title: "Govindraj Watch & Gifts | Best Watch & Accessories Shop in Naigaon Bazaar",
   description:
-    "Official website for Govindraj Watch & Accessories Shop in Naigaon Bazaar, Maharashtra. Authorized dealer for Titan, Sonata, Fastrack, Casio G-Shock & Fossil watches, genuine leather belts, wallets, sunglasses & master watch repair hub.",
+    "Official website for Govindraj Watch & Gifts Shop in Naigaon Bazaar, Maharashtra. Authorized dealer for Titan, Sonata, Fastrack, Casio G-Shock & Fossil watches, genuine leather belts, wallets, sunglasses & master watch repair hub.",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
   keywords: [
     "Govindraj Watch Shop",
     "Govindraj Watch Naigaon",
