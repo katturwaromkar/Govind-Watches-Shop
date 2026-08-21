@@ -22,7 +22,19 @@ export async function GET(req: Request) {
     const where: any = {};
 
     if (category) {
-      where.category = { slug: category };
+      const catLower = category.toLowerCase();
+      if (catLower === 'clocks' || catLower === 'wall-clocks') {
+        where.category = { slug: { in: ['clocks', 'wall-clocks'] } };
+      } else if (catLower === 'gifts' || catLower === 'gift-frames') {
+        where.category = { slug: { in: ['gifts', 'gift-frames'] } };
+      } else if (catLower === 'kids') {
+        where.OR = [
+          { category: { slug: 'kids' } },
+          { gender: 'KIDS' },
+        ];
+      } else {
+        where.category = { slug: category };
+      }
     }
     if (brand) {
       where.brand = { slug: brand };
@@ -70,7 +82,7 @@ export async function GET(req: Request) {
       orderBy = { isBestseller: 'desc' };
     }
 
-    const products = await prisma.product.findMany({
+    let products = await prisma.product.findMany({
       where,
       orderBy,
       include: {
@@ -80,6 +92,20 @@ export async function GET(req: Request) {
         specifications: true,
       },
     });
+
+    // Guarantee: If strict filter returns 0 items, fallback to top featured/recent products so no page is ever empty
+    if (products.length === 0) {
+      products = await prisma.product.findMany({
+        take: 12,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          category: true,
+          brand: true,
+          images: true,
+          specifications: true,
+        },
+      });
+    }
 
     return NextResponse.json({ products });
   } catch (error) {

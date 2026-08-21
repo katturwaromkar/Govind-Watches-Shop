@@ -190,6 +190,66 @@ async function main() {
     },
   });
 
+  const catClocksAlias = await prisma.category.upsert({
+    where: { slug: "clocks" },
+    update: {},
+    create: {
+      name: "Wall Clocks",
+      slug: "clocks",
+      description: "Designer silent sweep wall clocks & pendulum clocks.",
+      image: "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?q=80&w=800",
+      isFeatured: true,
+    },
+  });
+
+  const catGiftFramesAlias = await prisma.category.upsert({
+    where: { slug: "gift-frames" },
+    update: {},
+    create: {
+      name: "Gift Frames",
+      slug: "gift-frames",
+      description: "Custom photo frames & memory keepsakes.",
+      image: "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800",
+      isFeatured: true,
+    },
+  });
+
+  const catKids = await prisma.category.upsert({
+    where: { slug: "kids" },
+    update: {},
+    create: {
+      name: "Kids Collection",
+      slug: "kids",
+      description: "Fun, vibrant and durable watches for children.",
+      image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=800",
+      isFeatured: true,
+    },
+  });
+
+  const catCaps = await prisma.category.upsert({
+    where: { slug: "caps" },
+    update: {},
+    create: {
+      name: "Caps & Headwear",
+      slug: "caps",
+      description: "Stylish outdoor caps, sun visors and athletic headwear.",
+      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800",
+      isFeatured: true,
+    },
+  });
+
+  const catKeychains = await prisma.category.upsert({
+    where: { slug: "keychains" },
+    update: {},
+    create: {
+      name: "Keychains & Small Accessories",
+      slug: "keychains",
+      description: "Genuine leather keychains, car key rings and multi-tools.",
+      image: "https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=800",
+      isFeatured: true,
+    },
+  });
+
   // 5. Create Products
   const productsData = [
     {
@@ -507,6 +567,119 @@ async function main() {
         { key: "Movement", value: "Self-Winding Automatic Mechanical" },
         { key: "Case Diameter", value: "44 mm" },
         { key: "Strap Material", value: "Authentic Cowhide Leather" },
+      ],
+    },
+    {
+      name: "Fastrack Disney Avengers Kids Digital Waterproof Watch",
+      slug: "fastrack-disney-avengers-kids-digital-watch",
+      sku: "FT-KIDS-AV01",
+      description: "Fun, durable, water-resistant digital watch for kids with Avengers theme, EL backlight, alarm, and soft silicone strap.",
+      shortDescription: "Fastrack Avengers digital watch for kids with backlight.",
+      price: 1195,
+      mrp: 1495,
+      discount: 20,
+      gender: "KIDS",
+      style: "DIGITAL",
+      movement: "DIGITAL",
+      dialColor: "Multicolor",
+      strapMaterial: "Silicone",
+      strapColor: "Blue",
+      waterResistance: "30m",
+      isBestseller: true,
+      isNewArrival: true,
+      isFeatured: true,
+      categoryId: catKids.id,
+      brandId: fastrack.id,
+      images: [
+        "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=800",
+      ],
+      specs: [
+        { key: "Target Age", value: "5 to 14 Years" },
+        { key: "Display", value: "Digital LCD with EL Backlight" },
+        { key: "Water Resistance", value: "3 ATM" },
+      ],
+    },
+    {
+      name: "Fastrack Athletics Curved Brim Outdoor Sun Cap",
+      slug: "fastrack-athletics-curved-brim-sun-cap",
+      sku: "FT-CAP-992",
+      description: "Breathable 100% cotton twill outdoor cap with adjustable brass buckle strap, UV protection, and embroidered logo.",
+      shortDescription: "100% cotton adjustable outdoor cap by Fastrack.",
+      price: 499,
+      mrp: 799,
+      discount: 37,
+      gender: "UNISEX",
+      style: "CASUAL",
+      categoryId: catCaps.id,
+      brandId: fastrack.id,
+      images: [
+        "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800",
+      ],
+      specs: [
+        { key: "Material", value: "100% Breathable Cotton Twill" },
+        { key: "Strap Type", value: "Adjustable Metal Buckle" },
+      ],
+    },
+    {
+      name: "Wildhorn Handcrafted Top-Grain Leather Keychain",
+      slug: "wildhorn-handcrafted-leather-keychain",
+      sku: "WH-KEY-01",
+      description: "Handcrafted 100% top-grain leather keychain with heavy-duty zinc alloy car key ring and hook.",
+      shortDescription: "Handcrafted genuine leather keychain with zinc alloy ring.",
+      price: 349,
+      mrp: 599,
+      discount: 41,
+      gender: "UNISEX",
+      style: "FORMAL",
+      categoryId: catKeychains.id,
+      brandId: wildhorn.id,
+      images: [
+        "https://images.unsplash.com/photo-1624222247344-550fb60583dc?q=80&w=800",
+      ],
+      specs: [
+        { key: "Material", value: "Genuine Hunter Leather + Zinc Alloy" },
+      ],
+    },
+    {
+      name: "Ajanta Royal Teakwood Finish Pendulum Wall Clock 48cm",
+      slug: "ajanta-royal-teakwood-pendulum-wall-clock",
+      sku: "AJ-PEND-480",
+      description: "Grand traditional pendulum wall clock with teakwood finish frame, hourly chime mechanism, and silent sweep quartz movement.",
+      shortDescription: "48cm grand pendulum wall clock with hourly chime.",
+      price: 2499,
+      mrp: 3499,
+      discount: 28,
+      gender: "UNISEX",
+      style: "CLASSIC",
+      categoryId: catClocksAlias.id,
+      brandId: titan.id,
+      images: [
+        "https://images.unsplash.com/photo-1563861826100-9cb868fdbe1c?q=80&w=800",
+      ],
+      specs: [
+        { key: "Movement", value: "Quartz Pendulum + Chime" },
+        { key: "Height", value: "48 cm / 19 Inches" },
+      ],
+    },
+    {
+      name: "Personalized Royal Gold Wedding Anniversary Photo Frame 16x24",
+      slug: "customized-royal-gold-wedding-photo-frame-16x24",
+      sku: "GV-FRAME-1624",
+      description: "Customized 16x24 inch royal gold teakwood photo frame with HD lustre photo printing for weddings and anniversaries.",
+      shortDescription: "Customized 16x24 royal gold photo frame with HD printing.",
+      price: 2199,
+      mrp: 3199,
+      discount: 31,
+      gender: "COUPLE",
+      style: "LUXURY",
+      categoryId: catGiftFramesAlias.id,
+      brandId: sonata.id,
+      images: [
+        "https://images.unsplash.com/photo-1513885535751-8b9238bd345a?q=80&w=800",
+      ],
+      specs: [
+        { key: "Size", value: "16 x 24 Inches" },
+        { key: "Customization", value: "Photo Printing Included" },
       ],
     },
   ];
